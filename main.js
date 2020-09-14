@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const config = require('./config/config.json');
 const client = new Discord.Client();
 const prefix = '!';
 const fs = require('fs');
@@ -51,11 +52,5 @@ client.on('message', message =>{
     }
 })
 
-const confFiles = fs.readdirSync('./config/').filter(file => file.endsWith('.js'));
-for(const file of confFiles){
-    const config = require(`./config/${file}`);
 
-    client.commands.set(config.name, config);
-}
-
-client.login(client.commands.get('config').execute(message, args));
+client.login(config.token);
