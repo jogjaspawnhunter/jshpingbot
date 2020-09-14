@@ -51,4 +51,11 @@ client.on('message', message =>{
     }
 })
 
-client.login('NzUwMjc3ODgzMzU1ODU2OTY3.X04Mug.9kg694P6TQfv0tP5lLud98H1TN8');
+const confFiles = fs.readdirSync('./config/').filter(file => file.endsWith('.js'));
+for(const file of confFiles){
+    const config = require(`./config/${file}`);
+
+    client.commands.set(config.name, config);
+}
+
+client.login(client.commands.get('config').execute(message, args));
