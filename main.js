@@ -23,32 +23,13 @@ client.on('message', message =>{
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if(command === 'ping'){
-        client.commands.get('ping').execute(message, args);
-    } else if(command == 'wiki'){
-        client.commands.get('wiki').execute(message, args);
-    } else if(command == 'help'){
-        client.commands.get('help').execute(message, args);
-    } else if(command == 'update'){
-        client.commands.get('update').execute(message, args);
-    } else if(command == 'bayar'){
-        client.commands.get('bayar').execute(message, args);
-    } else if(command == 'donasi'){
-        client.commands.get('donasi').execute(message, args);
-    } else if(command == 'error'){
-        client.commands.get('error').execute(message, args);
-    } else if(command == 'gratisan'){
-        client.commands.get('gratisan').execute(message, args);
-    } else if(command == 'quest'){
-        client.commands.get('quest').execute(message, args);
-    } else if(command == 'mega'){
-        client.commands.get('mega').execute(message, args);
-    } else if(command == 'thanks'){
-        client.commands.get('thanks').execute(message, args);
-    } else if(command == 'status'){
-        client.commands.get('status').execute(message, args);
-    } else{
-        message.channel.send('ku tak tau apa maksudmu');
+    if (!client.commands.has(command)) return;
+
+    try {
+	    client.commands.get(command).execute(message, args);
+    } catch (error) {
+	    console.error(error);
+	    message.reply('ku tak tahu apa maksudmu, coba kirim `!help`');
     }
 })
 
