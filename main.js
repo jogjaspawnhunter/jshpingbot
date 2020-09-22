@@ -30,7 +30,6 @@ client.on('message', message =>{
     } catch (error) {
 	    console.error(error);
 	    message.reply('ku tak tahu apa maksudmu, coba kirim `!help`');
-	    message.channel.send('ku tak tahu apa maksudmu, coba kirim `!help`');
     }
 })
 
