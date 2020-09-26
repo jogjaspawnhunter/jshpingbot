@@ -27,7 +27,7 @@ client.on('message', message => {
 	const command = client.commands.get(commandName)
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-	if (!command) return;
+	if (!command) return message.reply('Saya tidak tahu apa maksudmu, coba cek dengan mengirim \`${prefix}help\`');
 
 	if (command.guildOnly && message.channel.type === 'dm') {
 		return message.reply('Saya tidak bisa menggunakan perintah itu dalam DM');
