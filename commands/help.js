@@ -13,7 +13,7 @@ module.exports = {
 		if (!args.length) {
 			data.push('Berikut semua perintah/command yang tersedia:');
 			data.push(commands.map(command => command.name).join('\n'));
-			data.push(`\nKamu bisa mengirimkan \`${prefix}help [command name]\` untuk mendapatkan keterangan tentang perintah itu lebih lanjut`);
+			data.push(`\nKamu bisa mengirimkan \`${prefix}help [command name]\` untuk mendapatkan keterangan tentang perintah itu lebih lanjut\ncontoh: \`${prefix}help ping\``);
 
 			return message.author.send(data, { split: true })
 				.then(() => {
