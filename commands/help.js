@@ -1,7 +1,46 @@
+const { prefix } = require('../config/config.json');
+
 module.exports = {
-    name: 'help',
-    description: "this is a help command!",
-    execute(message, args){
-        message.channel.send('Kirim chat ` !help ` untuk melihat ini.\nPrefix/Command yang tersedia adalah sbb:\n\n!help : Menampilkan semua prefix/command yang tersedia\n!area : Cara membuat file Area/Geofence\n!ping : Akan dibalas dengan pong!\n!wiki : Akan menunjukkan cara-cara yang kamu perlukan\n!update : Cara update map/scanner/device kamu\n!donasi : Cara untuk melakukan Donasi\n!bayar : Cara untuk melakukan Kontribusi/Patungan bulanan untuk Map kita tercinta\n!gratisan : Apabila ada giveaway atau yang gratisan ada di sini\n!error : Cara menanggulangi apabila terjadi ERROR pada Map/Scanner/Device kamu ada di sini\n!quest : Info update & Pengetahuan umum tentang quest pada Map kita\n!mega : Info tentang Mega update\n!status : Info Status Versi Map dan Device yang support untuk dijalankan\n\nRajinlah membaca terlebih dahulu dari info-info yang ada :smile:\nTerima Kasih');
-    }
-}
+	name: 'help',
+	description: 'Mencantumkan semua perintah/command yang tersedia',
+	aliases: ['commands'],
+	usage: '[command name]',
+	cooldown: 5,
+	execute(message, args) {
+		const data = [];
+		const { commands } = message.client;
+
+		if (!args.length) {
+			data.push('Berikut semua perintah/command yang tersedia:');
+			data.push(commands.map(command => command.name).join('\n'));
+			data.push(`\nKamu bisa mengirimkan \`${prefix}help [command name]\` untuk mendapatkan keterangan tentang perintah itu lebih lanjut`);
+
+			return message.author.send(data, { split: true })
+				.then(() => {
+					if (message.channel.type === 'dm') return;
+					message.reply('Saya telah mengirimkan DM kepada kamu tentang perintah/command yang tersedia');
+				})
+				.catch(error => {
+					console.error(`Tidak bisa mengirim DM kepada ${message.author.tag}.\n`, error);
+					message.reply('Sepertinya saya tidak bisa mengirim DM kepada kamu');
+				});
+		}
+
+		const name = args[0].toLowerCase();
+		const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
+
+		if (!command) {
+			return message.reply('Saya tidak mengerti apa maksudmu');
+		}
+
+		data.push(`**Name:** ${command.name}`);
+
+		if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
+		if (command.description) data.push(`**Description:** ${command.description}`);
+		if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+
+		data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
+
+		message.channel.send(data, { split: true });
+	},
+};
