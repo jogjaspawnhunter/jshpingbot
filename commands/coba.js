@@ -1,7 +1,7 @@
 module.exports = {
-	name: 'coba',
-	description: 'Info tentang group discord kita ini',
-	execute(message) {
-		message.channel.send('`Status: <#788061193050521651>`\nJumlah total member: ${message.guild.memberCount}');
-	},
-};
+    name: 'coba',
+    description: "Cara update map/scanner/device kamu",
+    execute(message, args){
+        message.channel.send('Status <#788061193050521651>\nChannel ini `<#788061193050521651>`\nThanks.');
+    }
+}
