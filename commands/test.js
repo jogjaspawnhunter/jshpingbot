@@ -1,4 +1,4 @@
-const chan1 = client.channels.get("788064501131509810");
+const chan1 = message.guild.channels.get('788064501131509810');
 module.exports = {
     name: 'test',
     description: "Info Status Versi Map dan Device yang support untuk dijalankan",
